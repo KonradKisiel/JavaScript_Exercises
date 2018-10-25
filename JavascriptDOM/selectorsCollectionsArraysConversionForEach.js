@@ -1,3 +1,4 @@
+//getting collection of elements
 var titles = document.getElementsByClassName('title');
 
 //checking if element is an array
@@ -28,12 +29,12 @@ console.log(book);
 
 //but querySelectorAll does
 console.log('querySelectorAll');
-var booksCollection = document.querySelectorAll('#book-list li .name');
+var booksArray = document.querySelectorAll('#book-list li .name');
 console.log(booksCollection);
 
-//convering booksCollection to Array and looping throuh
-console.log('convering booksCollection to Array and looping throuh');
-var booksArray = Array.from(booksCollection)
+//if we use querySelectorAll instead getElementsByClassName we get array already
+console.log('if we use querySelectorAll instead getElementsByClassName we get array already');
+console.log(Array.isArray(Array.from(booksArray)));
 booksArray.forEach(function(book){
     console.log(book);
-})
+});
