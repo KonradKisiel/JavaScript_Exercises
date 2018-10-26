@@ -1,0 +1,14 @@
+//in JS most things are objects
+var names = ['ryu', 'crystal', 'mario'];
+//sorting names
+names.sort();
+//by typing window in developers console we get access to all JS methods
+
+//numbers, booleans and strings they are not objects, they are primitivetypes
+//https://stackoverflow.com/questions/8511281/check-if-a-value-is-an-object-in-javascript
+//eg var name is a primitive
+var name = 'mario';
+//when we call methods to the primitive it become an object, JS add aditional properties to it, so even non objects can behave like objects
+name.length;
+//below is an example of non-primitive string (an object)
+var name2 = new String('ryu');
