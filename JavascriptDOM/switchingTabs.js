@@ -1,5 +1,3 @@
-//wait for the end of loading DOM content
-document.addEventListener('DOMContentLoaded', function(){
 //tabbed content
 const tabs = document.querySelector('.tabs');
 const panels = document.querySelectorAll('.panel');
@@ -16,5 +14,3 @@ tabs.addEventListener('click', function(e){
         })
     }
 })
-})
-
