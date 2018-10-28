@@ -1,0 +1,32 @@
+****************************** SYNCHRONOUS JS *********************************
+
+Synchronous JavaScript code run on a single thread (can do 1 thing at a time)
+
+Synchronous code wits for 1 action to complete before moving on the next:
+
+	var article = readSyn(article_loc);
+	console.log(article);
+	var authors = readSync(authors_loc);
+	console.log(authors);
+
+
+****************************** ASYNCHRONOUS JS *********************************
+
+JS run only on sigle thread but request can be asynchronous
+
+readAsync(article_loc; function(){
+	console.log(article);
+});
+
+readAsync(authors_loc, function(){
+	console.log(authors);
+});
+
+******************************** AJAX REQUEST **********************************
+
+Asynchronous JavaScript And XML
+
+Communicating with a server by making a http request
+
+No need to reload the page
+
