@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Node HTML test server</title>
+    <link href="/assets/style.css" rel="stylesheet" type="text/css" />
+  </head>
+
+  <body>
+    <!-- add partial view-->
+    <% include partials/nav.ejs %>
+    <h2>Thanks for getting in touch!</h2>
+    <p>
+      You contacted: <%= data.who %> in the <%= data.department %> department.
+    </p>
+    <p>We will reply to you at <%= data.email %></p>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+body {
+  background: skyblue;
+  font-family: verdana;
+  color: #fff;
+  padding: 30px;
+}
+h1,
+h2 {
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+h2 {
+  font-size: 30px;
+}
+p,
+li {
+  font-size: 16px;
+  text-align: center;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+#contact-form {
+  display: grid;
+  padding: 5% 30%;
+}
+#contact-form label,
+#contact-form input {
+  padding: 10px;
+}
+#contact-form input[value="submit"] {
+  max-width: 100px;
+  margin: auto;
+  margin-top: 20px;
+}
