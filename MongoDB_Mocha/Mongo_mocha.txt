@@ -1,0 +1,32 @@
+
+
+//to run tests, install mocha, create test folder, in packge.json set "test": "mocha"
+//create test (eg):
+const assert = require("assert");
+
+//dscribe what tests do, function with tests
+describe("some demo test", () => {
+  //Create tests
+  //each it block describes a test
+  it("adds two numbers together", () => {
+    //if assertion is true, test will pass
+    assert(2 + 3 === 5);
+  });
+});
+//then npm run test
+
+//hook is a section of code which is run before (or after) run a test
+
+//mongoose methods:
+InstanceOfModel.save() - save instance of schema obj
+InstanceOfModel.isNew - returns true when InstanceOfModel is created localy and not yet been send to db
+Model.find({}) - get all records from DB
+Model.find(property: "value") - find all records with certain value
+Model.findOne(property: "value") - find one record with certain value
+InstanceOfModel.remove()
+Model.remove()
+Model.findOneAndDelete()
+InstanceOfModel.update()
+Model.update() - update all records acording to specific criteria
+Model.findOneAndUpdate() - update one record acording to specific criteria
+
