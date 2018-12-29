@@ -1,0 +1,26 @@
+- Models represent collections in MongoDB
+- User Model to representa collection of Users
+
+//User schema example:
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+//Create user Schema & Model
+const UserSchema = new Schema({
+  name: {
+    type: String,
+    required: [true, "Name field is required"]
+  },
+  skill: {
+    type: String
+  },
+  available: {
+    type: Boolean,
+    default: false
+  }
+  //add in geo location
+});
+
+const User = mongoose.model("user", UserSchema);
+
+module.exports = User;
