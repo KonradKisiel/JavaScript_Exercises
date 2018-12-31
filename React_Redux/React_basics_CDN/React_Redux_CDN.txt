@@ -1,0 +1,167 @@
+//VS code extensions:
+ES7 React/Redux/GraphQL/React-Native
+Sublime Babel
+
+//Chrom extension: React Dev Tools
+
+React Components&Templates
+- looks like HTML templates (JSX)
+- can contain 'state' (data or UI state)
+- also can contain JS for functionality
+
+//BASIC COMPONENT:
+class App extends React.Component{
+  state = {
+    name: "Ryu",
+    age: 28
+  }
+  render(){
+    return(
+      <div className="app-component">
+      <h1>Some text</h1>
+      <p>My name is: {this.state.name} and I am {this.state.age}</p>
+      </div>
+    )
+  }
+}
+
+Redux - a layer on-top of react
+-Helps with state management of our app:
+   * data in the app
+   * UI state of the app 
+
+
+//************** REACT COMPONENT **************//
+//whenever we change the state of a comonent that component is going to re-render the template to the DOM
+//REACT CDN is use to create small components of webpages
+//to run JSX Babel is required https://babeljs.io/setup#installation
+//react-dom let us to inject react components to the dom
+
+//to otput dynamic content use { } eg:
+  return (
+            <div className="app-content">
+              <p>{ Math.random() * 10 }</p>
+            </div>
+          )
+        }
+
+
+//*************** COMPONENT STATE *******************//
+-JS object
+-describes current state of the componet (data, UI-state)
+-The state of a component can be updated over time (a modal ciuld close, the data we output could change)
+
+eg: Popup Component {showPopup: true} / {showPopup: false}
+
+//creating state of a component:
+-just define state property inside component class:
+class App extends React.Component{
+  state = {
+    name: "Ryu",
+    age: 28
+  }
+  render(){
+    return(
+      <div className="app-component">
+      <h1>Some text</h1>
+      <p>My name is: {this.state.name} and I am {this.state.age}</p>
+      </div>
+    )
+  }
+}
+
+
+//******************* DOM EVENTS ******************//
+//https://reactjs.org/docs/events.html#supported-events
+
+    <script type="text/babel">
+      class App extends React.Component{
+        state = {
+          name: "Ryu",
+          age: 28
+        }
+        handleClick(e){
+          console.log(e.target)
+        }
+        handleMouseOver(e){
+          console.log(e.target, e.pageX);
+        }
+        handleCopy(e){
+          console.log('Handle copy');
+        }
+        render(){
+          //always return one root element on the top (eg. wrap in div tag)
+          return (
+            <div className="app-content">
+              <h1>Eloo</h1>
+              <p>My name is: { this.state.name } and I am { this.state.age }</p>
+              <button onClick={this.handleClick}>Click Me</button>
+              <button onMouseOver={this.handleMouseOver}>Hover me</button>
+              <p onCopy={this.handleCopy}>Copy Me</p>
+            </div>
+          )
+        }
+      }
+
+
+
+//******************* Changing State (and 'this') ******************//
+
+      class App extends React.Component{
+        state = {
+          name: "Ryu",
+          age: 28
+        }
+        /*
+        //ERROR
+          handleClick(e){
+          console.log(this.state);
+          }
+        }
+        */
+        //if we want to log state in function out of render method we need to use =>
+        //arrow functions have a special behaviour when it comes to THIS keyword
+        //they bind value of this to whatever this is outside the function
+        //so use => functions when we wanna use THIS inside them
+        handleClick = (e) =>{
+          //console.log(e.target)
+          console.log(this.state);  
+	  //TO SET STAE USE this.setState({name: "New_Name"}) insted of this.state.name = "New_Name";
+	  this.setState({name: "New_Name"})
+        }
+  render(){
+
+
+//********************** FORMS(Input, submit) **********************//
+
+class App extends React.Component{
+        state = {
+          name: "Ryu",
+          age: 28
+        }
+        handleChange=(e)=>{
+          this.setState({
+            //grabbing value of the input field
+            name: e.target.value
+          })
+        }
+        handleSubmit=(e)=>{
+          //default action for submit is reflesh the page
+          e.preventDefault();
+          console.log('form submited', this.state.name)
+        }
+        render(){
+          return (
+            <div className="app-content">
+              <h1>My name is: {this.state.name} </h1>
+              <form onSubmit={this.handleSubmit}>
+                <input type="text" onChange={this.handleChange}/>
+                <button>Submit</button>
+              </form>
+            </div>
+          )
+        }
+      }
+
+
+
