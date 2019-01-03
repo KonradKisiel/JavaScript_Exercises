@@ -1,0 +1,322 @@
+//Guide:
+https://github.com/facebook/create-react-app
+npx create-react-app my-app
+
+
+//************************ PROPS **************************
+//We can use state to stre local data for components
+//PROPS are way for pass data from one component the parent to a child component
+
+In the parent component: 
+<Ninjas name="Ryu" age="25" belt="black" />
+
+
+In the child component: 
+class Ninjas extends Component {
+  render() {
+    return (
+      <div className="ninja">
+        <div>Name: {this.props.name}</div>
+        <div>Age: {this.props.age}</div>
+        <div>Belt: {this.props.belt}</div>
+      </div>
+    );
+  }
+}
+
+//destructuring
+    const {name, age, belt} = this.props;
+    return (
+      <div className="ninja">
+        <div>Name: {name}</div>
+        <div>Age: {age}</div>
+        <div>Belt: {belt}</div>
+      </div>
+    );
+  }
+
+//************************ Outputing list **************************
+//passing objects array inito component, 
+//and receiving in a child component as a prop, cycle throught it
+
+//Parent component:
+ state = {
+    ninjas: [
+      { name: "Ryu", age: 30, belt: "black", id: 1 },
+      { name: "Yoshi", age: 20, belt: "green", id: 2 },
+      { name: "Crystal", age: 25, belt: "pink", id: 3 }
+    ]
+  };
+  render() {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <Ninjas ninjas={this.state.ninjas} />
+      </div>
+    );
+  }
+
+//Child component:
+  render() {
+    //destructuring
+    const { ninjas } = this.props;
+    //cycle throught ninjas
+    const ninjaList = ninjas.map(ninja => {
+      return (
+        <div className="ninja" key={ninja.id}>
+          <div>Name: {ninja.name}</div>
+          <div>Age: {ninja.age}</div>
+          <div>Belt: {ninja.belt}</div>
+        </div>
+      );
+    });
+    return <div className="ninja-list">{ninjaList}</div>;
+  }
+
+//************** CONTAINER vs UI Components *****************//
+CONTAINER:
+- grap data and store in state
+- use clases to crete
+
+UI components:
+- don't contain state 
+- receive all data from (from container) props
+- use functions to creata
+- also namesd STATELESS COMPONENTS
+
+
+//STATELESS COMPONENT (functional component)
+- primaly focus on UI
+- use when we dont need state
+- unlike class based components props need to pass props as a parameter
+
+import React from "react";
+
+const Ninjas = props => {
+  //destructuring
+  const { ninjas } = props;
+  //cycle throught ninjas
+  const ninjaList = ninjas.map(ninja => {
+    return (
+      <div className="ninja" key={ninja.id}>
+        <div>Name: {ninja.name}</div>
+        <div>Age: {ninja.age}</div>
+        <div>Belt: {ninja.belt}</div>
+      </div>
+    );
+  });
+  return <div className="ninja-list">{ninjaList}</div>;
+};
+
+export default Ninjas;
+************* insted destructuring, we can do:
+const Ninjas = ({ninjas})=> {
+
+
+//****************** CONDITIONAL OUTPUT ********************//
+
+import React from "react";
+
+const Ninjas = ({ ninjas }) => {
+  // const ninjaList = ninjas.map(ninja => {
+  //   if (ninja.age > 20) {
+  //     return (
+  //       <div className="ninja" key={ninja.id}>
+  //         <div>Name: {ninja.name}</div>
+  //         <div>Age: {ninja.age}</div>
+  //         <div>Belt: {ninja.belt}</div>
+  //       </div>
+  //     );
+  //   } else {
+  //     return null;
+  //   }
+  // });
+
+  // const ninjaList = ninjas.map(ninja => {
+  //   //  condition ? if true : if false
+  //   return ninja.age > 20 ? (
+  //     <div className="ninja" key={ninja.id}>
+  //       <div>Name: {ninja.name}</div>
+  //       <div>Age: {ninja.age}</div>
+  //       <div>Belt: {ninja.belt}</div>
+  //     </div>
+  //   ) : null;
+  // });
+  // return <div className="ninja-list">{ninjaList}</div>;
+
+
+  return (
+    <div className="ninja-list">
+      {ninjas.map(ninja => {
+        return ninja.age > 20 ? (
+          <div className="ninja" key={ninja.id}>
+            <div>Name: {ninja.name}</div>
+            <div>Age: {ninja.age}</div>
+            <div>Belt: {ninja.belt}</div>
+          </div>
+        ) : null;
+      })}
+    </div>
+  );
+
+export default Ninjas;
+
+
+//************************** FORMS *******************//
+
+import React, { Component } from "react";
+
+class AppNinja extends Component {
+  state = {
+    name: null,
+    age: null,
+    belt: null
+  };
+  handleChange = e => {
+    this.setState({
+      //value is the text of the input field
+      [e.target.id]: e.target.value
+    });
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+    console.log(this.state);
+  };
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="name">Name: </label>
+          <input type="text" id="name" onChange={this.handleChange} />
+          <br />
+          <label htmlFor="name">Age: </label>
+          <input type="text" id="age" onChange={this.handleChange} />
+          <br />
+          <label htmlFor="name">Belt: </label>
+          <input type="text" id="belt" onChange={this.handleChange} />
+          <br />
+          <button>Submit</button>
+        </form>
+        <br />
+      </div>
+    );
+  }
+}
+
+export default AppNinja;
+
+//***************** FUNCION AS PROP ******************//
+SPREAD OPERATOR (...) - State is usually immutable, meaning we can not simply change it
+we need to make a copy. The spread operator allows us to do that
+
+
+PARENT COMPONENT:
+ class App extends Component {
+  state = {
+    ninjas: [
+      { name: "Ryu", age: 30, belt: "black", id: 1 },
+      { name: "Yoshi", age: 20, belt: "green", id: 2 },
+      { name: "Crystal", age: 25, belt: "pink", id: 3 }
+    ]
+  };
+  addNinja = ninja => {
+    ninja.id = Math.random();
+    //create copy of ninjas array, and add new onj to it
+    let ninjas = [...this.state.ninjas, ninja];
+    this.setState({
+      ninjas: ninjas
+    });
+  };
+  render() {
+    return (
+      <div className="App">
+        <h1>React App</h1>
+        <AddNinja addNinja={this.addNinja} />
+        <Ninjas ninjas={this.state.ninjas} />
+      </div>
+    );
+  }
+}
+
+CHILD COMPONENT:
+class AppNinja extends Component {
+  state = {
+    name: null,
+    age: null,
+    belt: null
+  };
+  handleChange = e => {
+    this.setState({
+      //value is the text of the input field
+      [e.target.id]: e.target.value
+    });
+  };
+  handleSubmit = e => {
+    e.preventDefault();
+    //function as a prop
+    this.props.addNinja(this.state);
+  };
+  render() {
+    return (
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="name">Name: </label>
+          <input type="text" id="name" onChange={this.handleChange} />
+          <br />
+          <label htmlFor="name">Age: </label>
+          <input type="text" id="age" onChange={this.handleChange} />
+          <br />
+          <label htmlFor="name">Belt: </label>
+          <input type="text" id="belt" onChange={this.handleChange} />
+          <br />
+          <button>Submit</button>
+        </form>
+        <br />
+      </div>
+    );
+  }
+}
+
+//************************* DELETING DATA **************************//
+PARENT:
+  deleteNinja = id => {
+    let ninjas = this.state.ninjas.filter(ninja => {
+      return ninja.id !== id;
+    });
+    this.setState({
+      ninjas: ninjas
+    });
+  };
+
+  <Ninjas deleteNinja={this.deleteNinja} ninjas={this.state.ninjas} />
+
+CHILD:
+  //Code below automaticly fire every time:
+  <button onClick={deleteNinja(ninja.id)}>Delete ninja</button>
+
+  //To fix this problem just use () =>
+  <button onClick={()=>deleteNinja(ninja.id)}>Delete ninja</button>
+
+//************** CSS Files *******************//
+//index.css is automaticly applayed to all modules
+
+//if we import CSS to one file, it add style to all files 
+import "./App.css";
+
+//if we want to use CSS Modules, we need to modyfi confguration file
+ 
+//************** LIFECYCLE METHODS (HOOKS) ********************//
+//React add automaticly prefixes
+
+  //when the component first mount the DOM
+  //component is mounted only once (before first render)
+  componentDidMount() {
+    console.log("component mounted");
+  }
+  //fires when we have change of state or props
+  componentDidUpdate(prevProps, prevState) {
+    console.log("component updated");
+    //data before update
+    console.log(prevProps, prevState);
+  }
+
