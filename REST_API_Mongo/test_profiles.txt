@@ -1,0 +1,29 @@
+{
+	"name": "John",
+	"skillsLevel": 5,
+	"available": true,
+	"geometry": {
+		"type": "Point",
+		"coordinates": [-80, 25.791]
+	}
+}
+
+{
+	"name": "Mark",
+	"skillsLevel": 7,
+	"available": true,
+	"geometry": {
+		"type": "Point",
+		"coordinates": [-80.245, 25.391]
+	}
+}
+
+{
+	"name": "Ann",
+	"skillsLevel": 6,
+	"available": true,
+	"geometry": {
+		"type": "Point",
+		"coordinates": [-82.589, 25.701]
+	}
+}

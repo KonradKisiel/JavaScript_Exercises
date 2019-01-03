@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>DevsGeo</title>
+  <link href="/styles.css" rel="stylesheet" type="text/css" />
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+</head>
+
+<body>
+  <h1>DevsGeo</h1>
+    <br>
+    <h2>Find a dev in your area:</h2>
+    <div id="app"></div>
+  <script type="text/babel">
+      class App extends React.Component{
+        state = {
+          devs: []
+        }
+        handleSubmit=(e)=>{
+          //default action for submit is reflesh the page
+          e.preventDefault();
+          let lng = this.refs.lng.value;
+          let lat = this.refs.lat.value;
+          fetch('/api/devs?lng='+lng+"&lat="+lat).then((data)=>{
+            return data.json();
+          }).then(json => {
+            this.setState({
+              devs: json
+            })
+          });
+        }
+        render() {
+          let devs = this.state.devs;
+          devs = devs.map((dev,index)=>{
+              return(
+                <li key={index}>
+                  <span className="name">{dev.name} </span>
+                  <span className="rank">Level: {dev.skillsLevel} </span>
+                  <span className="dist">Distance: {Math.floor(dev.dis*10000)} km</span>
+                </li>
+              )
+            })
+          return (
+            <div className="center">
+              <form id="search" onSubmit={this.handleSubmit}>
+                <label>Enter your latitude:</label><br/>
+                <input type="text" ref="lat" placeholder="latitude" required /><br/>
+                <br/>
+                <label>Enter your longitude:</label><br></br>
+                <input type="text" ref="lng" placeholder="longitude" required /><br/>
+                <br/>
+                <input className="btn" type="submit" value="Find Devs" /><br/>
+              </form>
+              <ul>{devs}</ul>
+            </div>
+          )
+        }
+      }
+      ReactDOM.render(<App/>, document.getElementById('app'));
+    </script>
+</body>
+</html>

@@ -7,10 +7,12 @@ const app = express();
 
 //connect to mongoDB
 mongoose.connect(
-  "mongodb://localhost/usersDB",
+  "mongodb://localhost/devsDB",
   { useNewUrlParser: true }
 );
 
+//static files handling middleware
+app.use(express.static("public"));
 //json handling middleware
 app.use(bodyParser.json());
 //routes handling middleware

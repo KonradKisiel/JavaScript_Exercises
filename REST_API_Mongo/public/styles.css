@@ -1,0 +1,49 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  margin: auto;
+  background: lightskyblue;
+  color: white;
+  letter-spacing: 200%;
+}
+
+.center {
+  margin: auto;
+  width: 300px;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+input {
+  outline: none;
+  border: none;
+  padding: 10px;
+  width: 300px;
+  margin: auto;
+  border-radius: 20px;
+}
+
+.btn {
+  width: 120px;
+  padding: 9px;
+  color: white;
+  border: 2px solid #fff;
+  background: none;
+  margin: auto;
+  font-weight: bold;
+  display: block;
+  cursor: pointer;
+}
+
+li span {
+  margin: 0 5px;
+}
+
+li {
+  margin: 5px 0;
+  padding: 5px;
+}
