@@ -221,7 +221,7 @@ PARENT COMPONENT:
   };
   addNinja = ninja => {
     ninja.id = Math.random();
-    //create copy of ninjas array, and add new onj to it
+    //create copy of ninjas array, and add new obj to it
     let ninjas = [...this.state.ninjas, ninja];
     this.setState({
       ninjas: ninjas

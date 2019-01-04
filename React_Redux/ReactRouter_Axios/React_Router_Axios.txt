@@ -1,0 +1,294 @@
+npm i react-router-dom
+
+in App.js:
+import React, { Component } from "react";
+import Navbar from "./components/Navbar";
+import { BrowserRouter, Route } from "react-router-dom";
+import Home from "./components/Home";
+import About from "./components/About";
+import Contact from "./components/Contact";
+
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <div className="App">
+          <Navbar />
+          <Route exact path="/" component={Home} />
+          <Route path="/about" component={About} />
+          <Route path="/contact" component={Contact} />
+        </div>
+      </BrowserRouter>
+    );
+  }
+}
+
+export default App;
+
+//if we want to avoid page reloading after clicking at link
+IN CHILD use 'react-router-dom' Link/NavLink instead <a>
+
+import React from "react";
+import { Link, NavLink } from "react-router-dom";
+
+const Navbar = () => {
+  return (
+    <nav className="nav-wrapper red darken-3">
+      <div className="container">
+        <a className="brand-logo">Poke' Times</a>
+        <ul className="right">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+//************* Programic Redirects ***************//
+any <Route> component inside <BrowserRouter> have added route properties 
+when we pass props to component and have acess to routing history
+
+import React from "react";
+
+const Contact = props => {
+  setTimeout(() => {
+    props.history.push("/about");
+  }, 2000);
+  return (
+    <div className="container">
+      <h4 className="center">Contact</h4>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+        error, tempora quidem in impedit eveniet iusto vel nulla rerum, officia
+        nesciunt illo doloremque placeat architecto magnam. Porro ducimus eos
+        atque!
+      </p>
+    </div>
+  );
+};
+
+export default Contact;
+
+//If we wanna ad react-router props to non <Route> component we can use
+//withRouter
+
+import React from "react";
+import { Link, NavLink, withRouter } from "react-router-dom";
+
+const Navbar = props => {
+  setTimeout(() => {
+    props.history.push("/about");
+  }, 2000);
+  return (
+    <nav className="nav-wrapper red darken-3">
+      <div className="container">
+        <a className="brand-logo">Poke' Times</a>
+        <ul className="right">
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <NavLink to="/about">About</NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact">Contact</NavLink>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default withRouter(Navbar);
+
+
+//***************** Higher Order Components *******************//
+Higher Order Components- wrap components and add extra functionality to them,
+use WrappedComponent
+
+
+import React from "react";
+
+const ColorRand = WrappedComponent => {
+  const colors = ["red", "pink", "orange", "blue", "grren", "yellow"];
+  const randomColor = colors[Math.floor(Math.random() * 5)];
+  const className = randomColor + "-text";
+
+  return props => {
+    return (
+      <div className={className}>
+        <WrappedComponent {...props} />
+      </div>
+    );
+  };
+};
+
+export default ColorRand;
+
+//////////////
+
+import React from "react";
+import ColorRand from "../hoc/ColorRand";
+
+const About = () => {
+  return (
+    <div className="container">
+      <h4 className="center">About</h4>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus
+        error, tempora quidem in impedit eveniet iusto vel nulla rerum, officia
+        nesciunt illo doloremque placeat architecto magnam. Porro ducimus eos
+        atque!
+      </p>
+    </div>
+  );
+};
+
+export default ColorRand(About);
+
+
+//***************** USING AXIOS ****************//
+//axios is using to fetch data from external sources
+//benefis of using sxios over fetch: https://stackoverflow.com/questions/40844297/what-is-difference-between-axios-and-fetch
+//backward compatybility (ie11), built-in XSRF protection
+npm i axios
+
+Good place to get data is ComponentDidMount
+funcional components cannot use lifecycle hooks
+
+import React, { Component } from "react";
+import axios from "axios";
+
+class Home extends Component {
+  state = {
+    posts: []
+  };
+  componentDidMount() {
+    axios.get("https://jsonplaceholder.typicode.com/posts").then(res => {
+      console.log(res);
+      this.setState({
+        posts: res.data.slice(0, 10)
+      });
+    });
+  }
+  render() {
+    const { posts } = this.state;
+    const postList = posts.length ? (
+      posts.map(post => {
+        return (
+          <div className="post card" key={post.id}>
+            <div className="card-content">
+              {post.title}
+              <span className="card-title">{post.title}</span>
+              <p>{post.body}</p>
+            </div>
+          </div>
+        );
+      })
+    ) : (
+      <div className="center">No posts yest</div>
+    );
+    return (
+      <div className="container">
+        <h4 className="center">Home</h4>
+        {postList}
+      </div>
+    );
+  }
+}
+
+export default Home;
+
+//************************* ROUTE PARAMETERS **************//
+//React router automaticlly provide acess to route parameters:
+    let id = this.props.match.params.post_id;
+
+
+//Component showning route id:
+import React, { Component } from "react";
+
+class Post extends Component {
+  state = {
+    id: null
+  };
+  componentDidMount() {
+    let id = this.props.match.params.post_id;
+    this.setState({
+      id
+    });
+  }
+  render() {
+    return (
+      <div className="container">
+        <h4>{this.state.id}</h4>
+      </div>
+    );
+  }
+}
+
+export default Post;
+
+
+//in App.js:
+ <Route path="/:post_id" component={}/>
+
+//*** CREATING DYNAMIC LINK ****//
+
+import React, { Component } from "react";
+import axios from "axios";
+
+class Post extends Component {
+  state = {
+    post: null
+  };
+  componentDidMount() {
+    let id = this.props.match.params.post_id;
+    axios.get("https://jsonplaceholder.typicode.com/posts/" + id).then(res => {
+      this.setState({
+        post: res.data
+      });
+    });
+    this.setState({
+      id
+    });
+  }
+  render() {
+    const post = this.state.post ? (
+      <div className="post">
+        <h2 className="center">{this.state.post.title}</h2>
+        <p>{this.state.post.body}</p>
+      </div>
+    ) : (
+      <div className="center">Loading post...</div>
+    );
+    return (
+      <div className="container">
+        <h4>{post}</h4>
+      </div>
+    );
+  }
+}
+
+export default Post;
+
+//*************SWITCH TAG*************
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+//select only one route (without switch :post_id component is rendered also in about and contact)
+
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/:post_id" component={Post} />
+          </Switch>
