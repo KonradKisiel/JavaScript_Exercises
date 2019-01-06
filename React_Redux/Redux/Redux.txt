@@ -1,0 +1,36 @@
+//REDUX
+-central data store for all app data
+-any component can access data from it
+-makes state management easy
+
+
+const { createStore} = Redux;
+
+const initState = {
+  todos: [],
+  posts: []
+}
+
+const myreducer = (state = initState, action) =>{
+  if (action.type == 'ADD_TODO'){
+    return {
+      ...state,
+      todos: [...state.todos, action.todo]
+    }
+  }
+}
+
+const store = createStore(myreducer);
+//fire every time the stahte has changed
+store.subscribe(()=>{
+  console.log('state updated');
+  console.log(store.getState());
+})
+//discribe type of an action
+const todoAction = { type: 'ADD_TODO', todo:'buy milk' }
+
+//dispatch the action
+store.dispatch(todoAction)
+
+//***************** *************************//
+npm i redux react-redux
